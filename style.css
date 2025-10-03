@@ -262,3 +262,101 @@ body {
     z-index: 999; /* Fica abaixo da imagem, mas acima do resto do conteúdo */
     cursor: zoom-out;
 }
+/* =========================================
+   MEDIA QUERIES PARA RESPONSIVIDADE
+   ========================================= */
+
+@media (max-width: 768px) {
+    
+    /* 1. Reverte o Layout Grid para uma Coluna (Bloco) */
+    body {
+        display: block; /* Volta para o fluxo normal de blocos */
+        /* Remove as definições de coluna e linha do Grid */
+        grid-template-columns: none; 
+        grid-template-rows: none; 
+        /* Reduz a fonte base para 14px em dispositivos menores para economia de espaço */
+        font-size: 14px; 
+    }
+    
+    /* 2. Menu (Header) - Torna-o de topo e não fixo */
+    .header {
+        /* Remove o posicionamento fixo do Grid */
+        grid-column: auto;
+        grid-row: auto;
+        
+        position: static; /* Não é mais fixo */
+        width: 100%; /* Ocupa toda a largura */
+        height: auto;
+        
+        /* Adiciona um pouco mais de padding para visual em smartphones */
+        padding: 10px 0;
+    }
+    
+    /* 3. Navbar - Alinha o logo e os links */
+    .navbar {
+        flex-direction: column; /* Coloca o logo e os links um abaixo do outro */
+        align-items: flex-start;
+        padding: 10px 20px;
+    }
+
+    /* 4. Links de Navegação - Alinhamento Vertical */
+    .nav-links {
+        flex-direction: column; /* Garante que os links fiquem em lista vertical */
+        width: 100%;
+        margin-top: 10px;
+    }
+    
+    .nav-links li {
+        margin-left: 0;
+        margin-bottom: 5px;
+        width: 100%;
+    }
+
+    .nav-links a {
+        text-align: center; /* Centraliza o texto do link na largura total */
+        padding: 8px;
+    }
+
+    /* 5. Conteúdo Principal - Ocupa a Largura Total */
+    .content {
+        /* Remove o posicionamento fixo do Grid */
+        grid-column: auto;
+        grid-row: auto;
+
+        width: 95%; /* Reduz a largura para caber margens menores */
+        max-width: none;
+        
+        /* Remove o margin-top: auto que empurrava para baixo, 
+           pois queremos que o conteúdo comece logo após o menu */
+        margin-top: 20px; 
+        margin-bottom: 20px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* 6. Rodapé - Ocupa a Largura Total */
+    .footer {
+        /* Remove o posicionamento fixo do Grid */
+        grid-column: auto;
+        grid-row: auto;
+        width: 100%;
+    }
+    
+    /* 7. Agenda (Seleção de Médico) - Altera de linha para coluna */
+    .doctor-selection {
+        flex-direction: column;
+        align-items: center; /* Centraliza os cartões */
+    }
+    
+    .doctor-card {
+        width: 90%; /* Ocupa mais espaço horizontalmente */
+        max-width: 300px;
+    }
+    
+    /* 8. Inputs e Selects - Ocupa a Largura Total */
+    .content input, 
+    .content select, 
+    .content textarea {
+        max-width: 95%; 
+    }
+}
