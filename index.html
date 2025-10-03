@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clínica Médica - Gerenciamento</title>
+    
+    <link rel="stylesheet" href="style.css"> 
+    
+</head>
+<body>
+
+    <header class="header">
+        <nav class="navbar">
+            <a href="#" class="logo">Clínica Gerência</a>
+            <ul class="nav-links">
+                <li><a href="#sobre" id="link-sobre">Sobre</a></li>
+                <li><a href="#fale-conosco" id="link-fale-conosco">Fale Conosco</a></li>
+                <li><a href="#agenda" id="link-agenda">Agenda</a></li>
+                <li><a href="#avaliacao" id="link-avaliacao">Avaliação</a></li>
+                <li><a href="#receita" id="link-receita">Receita</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="content" id="main-content">
+        <h2 class="page-title">Bem-vindo(a)</h2>
+        <p>Use o menu lateral para navegar entre as seções de gerenciamento da clínica.</p>
+    </main>
+
+    <footer class="footer">
+        <p>
+            Clinica MedHelp - 
+            <a 
+                href="https://www.google.com/maps/search/?api=1&query=Rua+Cisplatina,+298+-+Ipiranga%2FSP" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                title="Ver a localização no Google Maps"
+            >
+                Rua Cisplatina, 298 - Ipiranga/SP
+            </a>
+        </p>
+    </footer>
+    
+    <script>
+        const navLinks = document.querySelectorAll('.nav-links a');
+        const mainContent = document.getElementById('main-content');
+        const defaultTitle = 'Bem-vindo(a)';
+
+        // Dados de Conteúdo para simular as diferentes páginas
+        const pageContent = {
+            'sobre': {
+                title: 'Sobre a Clínica',
+                html: `
+                    <p>Aqui você pode gerenciar informações sobre a clínica, corpo clínico, missão e valores.</p>
+                    <p>Versão do Sistema: 1.0. Gerenciado por: [Seu Nome/Empresa].</p>
+                `
+            },
+            'fale-conosco': {
+                title: 'Fale Conosco',
+                html: `
+                    <p>Área para gerenciar formulários de contato de pacientes ou fornecedores.</p>
+                    <form>
+                        <label for="nome">Nome:</label><br>
+                        <input type="text" id="nome" name="nome" value="Exemplo de Form"><br>
+                        <button>Enviar Mensagem</button>
+                    </form>
+                `
+            },
+            'agenda': {
+                title: 'Agenda de Consultas',
+                html: `
+                    <p>**Funcionalidade Principal:** Marque uma nova consulta.</p>
+                    <form id="appointment-form">
+                        <label for="especialidade">Especialidade:</label><br>
+                        <select id="especialidade" name="especialidade">
+                            <option value="">Selecione a Especialidade</option>
+                            <option value="pediatria">Pediatria</option>
+                            <option value="ginecologia">Ginecologia</option>
+                            <option value="cardiologia">Cardiologia</option>
+                            <option value="psiquiatria">Psiquiatria</option>
+                            <option value="geral">Clínica Geral</option>
+                        </select><br><br>
+
+                        <label>Escolha o Médico (Clique na foto para dar zoom):</label>
+                        <div class="doctor-selection">
+                            <div class="doctor-card" data-medico="joao_santos" data-especialidade="cardiologia">
+                                <img src="joao.jpg" alt="Dr. João Santos">
+                                <p>Dr. João Santos (Cardiologia)</p>
+                            </div>
+                            
+                            <div class="doctor-card" data-medico="ana_silva" data-especialidade="pediatria">
+                                <img src="ana.jpg" alt="Dra. Ana Silva">
+                                <p>Dra. Ana Silva (Pediatria)</p>
+                            </div>
+                            
+                            <div class="doctor-card" data-medico="maria_oliveira" data-especialidade="ginecologia">
+                                <img src="maria.jpg" alt="Dra. Maria Oliveira">
+                                <p>Dra. Maria Oliveira (Ginecologia)</p>
+                            </div>
+                        </div>
+
+                        <label for="data">Escolha a Data:</label><br>
+                        <input type="date" id="data" name="data"><br><br>
+
+                        <button type="submit">Buscar Horários Disponíveis</button>
+                    </form>
+                    <hr>
+                    <p>
+                        **Gerenciamento:**
+                        <ul>
+                            <li>Visualizar Horários</li>
+                            <li>Cadastrar Novo Paciente</li>
+                        </ul>
+                    </p>
+                `
+            },
+            'avaliacao': {
+                title: 'Avaliação do Paciente',
+                html: `
+                    <p>Seção para registro de anamnese, histórico e notas de avaliação clínica.</p>
+                    <textarea rows="5" placeholder="Insira a avaliação clínica..."></textarea>
+                    <p>A segurança dos dados (LGPD) é crítica nesta seção.</p>
+                `
+            },
+            'receita': {
+                title: 'Emissão de Receitas',
+                html: `
+                    <p>Ferramenta para criação e impressão de receitas médicas padronizadas.</p>
+                    <p>Campos necessários: Nome do Paciente, Medicamento, Dosagem, Posologia.</p>
+                    <button style="background-color: var(--cor-secundaria);">Gerar Receita em PDF</button>
+                `
+            }
+        };
+
+        // Função para carregar o conteúdo da página e atualizar o estado do menu.
+        function loadPageContent(pageId) {
+            navLinks.forEach(link => link.classList.remove('active'));
+            const activeLink = document.getElementById(`link-${pageId}`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+
+            const content = pageContent[pageId];
+            if (content) {
+                mainContent.innerHTML = `<h2 class="page-title">${content.title}</h2>${content.html}`;
+            } else {
+                 mainContent.innerHTML = `<h2 class="page-title">Página Não Encontrada</h2><p>O conteúdo para ${pageId} não foi definido.</p>`;
+            }
+
+            // Ativa a lógica de seleção de cartão e zoom APÓS o conteúdo da agenda ser carregado.
+            if (pageId === 'agenda') {
+                setupDoctorSelection();
+            }
+        }
+        
+        // Lógica para gerenciar a seleção visual do cartão do médico e o zoom.
+        function setupDoctorSelection() {
+            const doctorCards = document.querySelectorAll('.doctor-card');
+            const specialitySelect = document.getElementById('especialidade');
+            
+            doctorCards.forEach(card => {
+                const img = card.querySelector('img'); 
+
+                // 1. Lógica de seleção do cartão (muda cor de fundo e seleciona especialidade)
+                card.addEventListener('click', () => {
+                    doctorCards.forEach(c => c.classList.remove('selected'));
+                    card.classList.add('selected');
+                    const selectedSpecialty = card.getAttribute('data-especialidade');
+                    specialitySelect.value = selectedSpecialty;
+                });
+
+                // 2. Lógica de zoom ao clicar na IMAGEM
+                img.addEventListener('click', (event) => {
+                    event.stopPropagation(); // Impede que o clique na imagem selecione o cartão
+                    
+                    if (img.classList.contains('zoomed')) {
+                        // Se já está com zoom, remove o zoom e o overlay
+                        img.classList.remove('zoomed');
+                        document.querySelector('.overlay-zoom')?.remove(); 
+                    } else {
+                        // Se não está com zoom, aplica o zoom
+                        img.classList.add('zoomed');
+
+                        // Cria e adiciona o overlay
+                        const overlay = document.createElement('div');
+                        overlay.classList.add('overlay-zoom');
+                        document.body.appendChild(overlay);
+
+                        // Remove o zoom e o overlay ao clicar fora da imagem ou no overlay
+                        overlay.addEventListener('click', () => {
+                            img.classList.remove('zoomed');
+                            overlay.remove();
+                        });
+                    }
+                });
+            });
+
+            // 3. Lógica de filtro por especialidade
+            specialitySelect.addEventListener('change', () => {
+                const selectedSpecialty = specialitySelect.value;
+                
+                doctorCards.forEach(card => {
+                    const cardSpecialty = card.getAttribute('data-especialidade');
+                    
+                    if (selectedSpecialty === '' || cardSpecialty === selectedSpecialty) {
+                         card.style.opacity = '1';
+                         card.style.display = 'block'; 
+                    } else {
+                        card.classList.remove('selected'); 
+                        card.style.opacity = '0.4';
+                    }
+                });
+            });
+        }
+        
+        // Adiciona o event listener a cada link
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault(); 
+                const pageId = link.getAttribute('href').substring(1); 
+                loadPageContent(pageId);
+                history.pushState(null, '', `#${pageId}`); 
+            });
+        });
+
+        // Lidar com a primeira carga da página
+        window.addEventListener('load', () => {
+            const initialHash = window.location.hash.substring(1);
+            if (initialHash && pageContent[initialHash]) {
+                loadPageContent(initialHash);
+            } else {
+                 const initialPageId = 'agenda'; 
+                 loadPageContent(initialPageId);
+            }
+        });
+        
+        // Permite que os botões de voltar/avançar do navegador funcionem
+        window.addEventListener('popstate', () => {
+            const hash = window.location.hash.substring(1);
+            if (hash && pageContent[hash]) {
+                loadPageContent(hash);
+            } else {
+                 mainContent.innerHTML = `<h2 class="page-title">${defaultTitle}</h2><p>Use o menu lateral para navegar entre as seções de gerenciamento da clínica.</p>`;
+                navLinks.forEach(link => link.classList.remove('active'));
+            }
+        });
+    </script>
+</body>
+</html>
